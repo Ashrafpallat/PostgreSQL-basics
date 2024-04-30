@@ -1,166 +1,157 @@
 # PostgreSQL Cheat Sheet
 
-Enter to posgress:
-
+## Connect to PostgreSQL
 ```psql -U postgres``` 
 
-List dbs:
+### List Databases
 ```\l```
 
-Creating new db:
+### Create a New Database
 ``` CREATE DATABASE db_name;```
 
-Drop a db:
+### Drop a Database
  ```DROP DATABASE db_name;```
 
-Connect to a db:
+### Connect to a Database
  ```\c db_name```
 
-Connect again to postgress / exit from current db:
+### Connect Again to PostgreSQL / Exit from Current Database
 ``` \c postgres```
 
------------------------------------------------------
+## Tables
 
-To see all the tables in the current db:
+### See All Tables in the Current Database
  ```\d```
 
-To see datails of the table:
+### See Details of a Table
 ```\d table_name```
 
-Create table without constrains:
+### Create Table Without Constraints
 ```CREATE TABLE table_name(id INT, name VARCHAR(50), email VARCHAR(50), date_of_birth DATE);```
 
-
-Delete a table:
+### Delete a Table
 ```DROP TABLE table_name;```
 
-Delete a record:
+### Delete a Record
 ```DELETE FROM employee WHERE name='muneer';```
 
-Create table with constraints:
+### Create Table With Constraints
 ```CREATE TABLE table_name(id BIGSERIAL NOT NULL PRIMARY KEY, name VARCHAR(50) NOT NULL,email VARCHAR(50) NOT NULL UNIQUE, date_of_birth DATE);```
 
-INSERT:
+## Data Manipulation
+
+### Insert
 ```INSERT INTO table_name (name, email, date_of_birth VALUES ('John', 'John@gmail.com', '1999-01-01');```
 
-To see the table contents:
+### See Table Contents
 ```SELECT * FROM table_name;```
-or
-```SELECT field_name FROM table_name;```
 
-ORDER BY:
- ```select * from employee order by name ASC;```
- ```select * from employee order by name DESC;```
+### Order By
+```select * from employee order by name ASC;```
+```select * from employee order by name DESC;```
 
-WHERE, AND:
+### Where, AND
 ```SELECT field_name FROM table_name WHERE name='muneer' AND date_of_birth='2000-10-01';```
 
-WHERE + '<,>,='
+### Where + '<,>,='
 ```company=# SELECT * FROM employee WHERE date_of_birth<'2000-01-09';```
 
-DISTINCT:
-```SELECT DISTINCT field_name FROM table_name; (avoid repeat values)```
+### Distinct
+```SELECT DISTINCT field_name FROM table_name;```
 
-ALTER:
-```ALTER TABLE table_name ADD COLUMN gender VARCHAR(10); (add column to the table)```
-
-```alter table students drop column_name;``` ( delete a column )
-
+### Alter Table
+```ALTER TABLE table_name ADD COLUMN gender VARCHAR(10);```
+```alter table students drop column_name;```
 ```ALTER TABLE students ADD CONSTRAINT unique_email UNIQUE (email);```
 
-UPDATE:
-```UPDATE table_name SET gender = 'Female'  WHERE name = 'Rose'; ```  (update the value of the gender of the row of Rose)
- 
-CREATED AT:
+### Update
+```UPDATE table_name SET gender = 'Female'  WHERE name = 'Rose'; ```
+
+## Additional Table Features
+
+### Created At
 ```CREATE TABLE table_name (id SERIAL PRIMARY KEY,name VARCHAR(100),email VARCHAR(100),gender VARCHAR(10),created_at DATE DEFAULT CURRENT_DATE);```
 
+## Advanced Queries
 
-Limit:
+### Limit
 ```SELETCT * FROM table_name LIMIT 5;```
-slect from a index
 ```SELECT * FROM table_name OFFSET 5 LIMIT 5;```
 
-FETCH:
+### Fetch
 ```company=# SELECT * FROM employee FETCH FIRST 5 ROWS ONLY;```
 
-IN:
+### In
 ```SELECT * FROM employee WHERE place IN('chennai','mumbai');```
-BETWEEN:
+
+### Between
 ```SELECT * FROM employee WHERE date_of_birth BETWEEN DATE '1999-01-01' AND '2005-01-02';```
 
-LIKE:
- ```SELECT * FROM employee WHERE name LIKE 'd%';``` (show the rows with name starting d)
- ```SELECT * FROM employee WHERE name LIKE '%d';``` (show the rows with name ending d)
-iLIKE:
- ```company=# SELECT * FROM employee WHERE name iLIKE '%d';``` (case in-sensitive)
+### Like
+```SELECT * FROM employee WHERE name LIKE 'd%';```
+```SELECT * FROM employee WHERE name LIKE '%d';```
 
-GROUP BY:
- ```SELECT place FROM employee GROUP BY place; ```
-``` SELECT place,COUNT(*) FROM employee GROUP BY place;```
+### iLike
+```company=# SELECT * FROM employee WHERE name iLIKE '%d';```
 
-HAVING:
+### Group By
+```SELECT place FROM employee GROUP BY place; ```
+```SELECT place,COUNT(*) FROM employee GROUP BY place;```
+
+### Having
 ```SELECT place,COUNT(*) FROM employee GROUP BY place HAVING COUNT(*)>1;```
 ```SELECT place,COUNT(*) FROM employee GROUP BY place HAVING COUNT(*)=1;```
 
-AGGREGATE FUNCTIONS:
+### Aggregate Functions
 
-max:
+#### Max
 ```SELECT max(salary) FROM employee;```
 
-min:
+#### Min
 ```SELECT min(salary) FROM employee;```
 
-round:
+#### Round
 ```SELECT round(avg(salary)) FROM employee;```
 
-Alias(AS):
+### Alias (AS)
 ```select id,name,email,salary,(salary/10) as sample from employee;```
 
-COALESCE
+### Coalesce
 ``` select id,name,mark,total,coalesce(email,'not found') from student```
-(it show not found for empty emails)
 
-CONFLICT:
-1. DO NOTHING
-   It dont update the record and not show the errro
-2. DO UPDATE
-   It update the record 
+### Conflict
+1. DO NOTHING: It doesn't update the record and doesn't show an error.
+2. DO UPDATE: It updates the record.
 
-UPSERT QUERY:
-insert if there is no record exists
-update if there is a record exists.
+### Upsert Query
+Insert if there is no record exists, update if there is a record exists.
 
-FOREIGN KEY:
-A foreign key links to the primary of a another table.
+## Foreign Key
+
+A foreign key links to the primary of another table.
 
 ```CREATE TABLE addresses (id SERIAL PRIMARY KEY,emp_id INTEGER REFERENCES employees(id),city VARCHAR(100),district VARCHAR(100),pin VARCHAR(10));```
 
-INNER JOIN:
+## Joins
+
+### Inner Join
 ```select * from employees inner join addresses on employees.id=addresses.emp_id;```
-  (address is another table which contains emp_id as a foreign key refering the employees       tables's primary key id)
 
-LEFT JOIN:
- show all data of left table and matching data of right
+### Left Join
+Show all data of left table and matching data of right
 
-RIGHT JOIN:
- show all data of right table and matching data of left
+### Right Join
+Show all data of right table and matching data of left
 
-FULL OUTER JOIN:
- show the complete data of both tables
+### Full Outer Join
+Show the complete data of both tables
 
-CASE:
- select name,mark, 
- case 
- when mark>=180 then 'A+' 
- when mark between 150 and 180 then 'A' 
- when mark between 100 and 150 then 'B+' 
- end from students;
+## Case Statement
 
-SUBQUERY:
-```select * from employee wheren id= (select id from employee where name='muneer');```
-
-```TRANSTACTION
- BEGIN;
- UPDATE employees
- SET salary = salary + 500;
- COMMIT;
+```sql
+select name,mark, 
+case 
+when mark>=180 then 'A+' 
+when mark between 150 and 180 then 'A' 
+when mark between 100 and 150 then 'B+' 
+end from students;
