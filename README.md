@@ -48,7 +48,8 @@ CREATE TABLE table_name(id INT, name VARCHAR(50), email VARCHAR(50), date_of_bir
 ```
 
 ### Delete a Table
-```sqlDROP TABLE table_name;
+```sql
+DROP TABLE table_name;
 ```
 
 ### Delete a Record
