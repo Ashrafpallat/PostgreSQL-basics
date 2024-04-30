@@ -89,7 +89,7 @@ SELECT field_name FROM table_name WHERE name='muneer' AND date_of_birth='2000-10
 
 ### Where + '<,>,='
 ```sql
-company=# SELECT * FROM employee WHERE date_of_birth<'2000-01-09';
+ SELECT * FROM employee WHERE date_of_birth<'2000-01-09';
 ```
 
 ### Distinct
@@ -132,7 +132,7 @@ SELECT * FROM table_name OFFSET 5 LIMIT 5;
 
 ### Fetch
 ```sql
-company=# SELECT * FROM employee FETCH FIRST 5 ROWS ONLY;
+ SELECT * FROM employee FETCH FIRST 5 ROWS ONLY;
 ```
 
 ### In
@@ -155,7 +155,7 @@ SELECT * FROM employee WHERE name LIKE '%d';
 
 ### iLike
 ```sql
-company=# SELECT * FROM employee WHERE name iLIKE '%d';
+ SELECT * FROM employee WHERE name iLIKE '%d';
 ```
 
 ### Group By
