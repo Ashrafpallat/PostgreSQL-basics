@@ -21,7 +21,8 @@ CREATE DATABASE db_name;
 ```
 
 ### Connect to a Database
- ```sql\c db_name
+ ```sql
+\c db_name
  ```
 
 ### Connect Again to PostgreSQL / Exit from Current Database
