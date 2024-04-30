@@ -242,12 +242,12 @@ when mark between 150 and 180 then 'A'
 when mark between 100 and 150 then 'B+' 
 end from students;
 ```
-###SUBQUERY:
+### SUBQUERY:
 ```sql
 select * from employee wheren id= (select id from employee where name='muneer');
 ```
 
-###TRANSTACTION
+### TRANSTACTION
  ```sql
 BEGIN;
  UPDATE employees
