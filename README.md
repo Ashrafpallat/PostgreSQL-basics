@@ -243,11 +243,15 @@ when mark between 100 and 150 then 'B+'
 end from students;
 ```
 ### SUBQUERY:
+
+A subquery, also known as a nested query or inner query, is a query nested within another SQL query. Subqueries are enclosed within parentheses and are used to return data that will be used in the main query's condition or selection criteria.
+
 ```sql
 select * from employee wheren id= (select id from employee where name='muneer');
 ```
 
 ### TRANSTACTION
+
  ```sql
 BEGIN;
  UPDATE employees
